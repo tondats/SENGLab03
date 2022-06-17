@@ -27,6 +27,7 @@ public class CalculatorController {
                 // CalculateListener class.
 		
 		this.theView.addCalculateListener(new CalculateListener());
+                this.theView.mulCalculateListener(new ProductListener());
 	}
 	
 	class CalculateListener implements ActionListener {
@@ -49,6 +50,41 @@ public class CalculatorController {
                         theModel.addTwoNumbers(firstNumber, secondNumber);
 			
                         theView.setCalcSolution(theModel.getCalculationValue());			
+                    }
+                    catch (NumberFormatException ex) {
+			// Provide an error message to the console output.	
+                        System.out.println(ex);				
+                        theView.displayErrorMessage(
+                            "Error: The numbers entered must be integers.");				
+                    }
+                    catch (Exception ex) {
+                        System.out.println(ex);				
+                        theView.displayErrorMessage(
+                            "Error: Generic error " + ex.getMessage());				                       
+                    }
+		}		
+	}
+        
+        class ProductListener implements ActionListener {
+
+                @Override
+		public void actionPerformed(ActionEvent e) {
+			
+                    int firstFactor = 0;
+                    int secondFactor = 0;
+			
+                    // Surround interactions with the view with
+                    // a try-catch block to handle user entry errors like
+                    // the numbers were not properly entered.
+			
+                    try {
+			
+                        firstFactor = theView.getFirstFactor();
+                        secondFactor = theView.getSecondFactor();
+				
+                        theModel.mulTwoNumbers(firstFactor, secondFactor);
+			
+                        theView.setProductSolution(theModel.getProductValue());			
                     }
                     catch (NumberFormatException ex) {
 			// Provide an error message to the console output.	
